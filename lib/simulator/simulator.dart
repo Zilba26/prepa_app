@@ -509,7 +509,7 @@ class _SimulatorState extends State<Simulator> {
   }
 
   Future<void> setSimulator() async {
-    final String response = await rootBundle.loadString('data/simulator.json');
+    final String response = await rootBundle.loadString('assets/data/simulator.json');
     final data = await json.decode(response);
     try{
       Map exam = data.firstWhere((exam) => exam["concours"] == _selectedConcours &&  exam["filiere"] == _selectedFiliere);

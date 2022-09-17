@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'navigation_service.dart';
 import 'utils/my_shared_preferences.dart';
 import 'home.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
       builder: (theme, darkTheme) => MaterialApp(
           title: 'Prepa App',
           debugShowCheckedModeBanner: false,
+          navigatorKey: NavigationService.navigatorKey,
           theme: theme,
           darkTheme: darkTheme,
           home: const Home()

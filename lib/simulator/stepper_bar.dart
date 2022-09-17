@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:prepa_app/navigation_service.dart';
+import 'package:prepa_app/utils/utils.dart';
 
 class StepperBar extends StatelessWidget {
   final int step;
@@ -6,7 +8,6 @@ class StepperBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double widthQuery = MediaQuery.of(context).size.width * 0.35;
     return FractionallySizedBox(
       widthFactor: 0.8,
       child: Container(
@@ -15,7 +16,7 @@ class StepperBar extends StatelessWidget {
         //color: Colors.blue,
         child: Stack(
           children: [
-            line(widthQuery),
+            line(),
             icons()
           ],
         ),
@@ -23,15 +24,15 @@ class StepperBar extends StatelessWidget {
     );
   }
 
-  Widget line(double width) {
+  Widget line() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12.5, horizontal: 8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          step == 2 ? Row(children: [coloredContainer(width), coloredContainer(width)])
-              : (step == 0 ? Row(children: [whiteContainer(width), whiteContainer(width)])
-              : Row(children: [coloredContainer(width), whiteContainer(width)])),
+          step == 2 ? Row(children: [coloredContainer(), coloredContainer()])
+              : (step == 0 ? Row(children: [whiteContainer(), whiteContainer()])
+              : Row(children: [coloredContainer(), whiteContainer()])),
         ],
       ),
     );
@@ -48,18 +49,37 @@ class StepperBar extends StatelessWidget {
     );
   }
 
-  Widget whiteContainer(double width) {
+  Widget whiteContainer() {
     return Container(
-      color: Colors.white,
-      height: 18,
-      width: width,
+      decoration: BoxDecoration(
+        gradient: Utils.getByAdaptiveTheme(
+          light: const LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: [Color.fromRGBO(240, 45, 81, 1), Color.fromRGBO(242, 114, 26, 1)]
+          ),
+          dark: const LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: [Colors.white, Colors.white],
+          ),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(2.0),
+        child: Container(
+          color: Colors.white,
+          height: 18,
+          width: MediaQuery.of(NavigationService.getContext()).size.width * 0.35,
+        ),
+      ),
     );
   }
 
-  Widget coloredContainer(double width) {
+  Widget coloredContainer() {
     return Container(
       height: 18,
-      width: width,
+      width: MediaQuery.of(NavigationService.getContext()).size.width * 0.35,
       decoration: const BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.centerLeft,

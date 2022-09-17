@@ -43,16 +43,18 @@ class _HomeState extends State<Home> {
         title: const Text("PrepaStat"),
         actions: [
           IconButton(
-            onPressed: () {
-              setState(() async {
-                if (AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark) {
+            onPressed: () async {
+              if (AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark) {
+                setState(() {
                   AdaptiveTheme.of(context).setLight();
-                  await MySharedPreferences.prefs.setString("themeMode", "light");
-                } else {
+                });
+                await MySharedPreferences.prefs.setString("themeMode", "light");
+              } else {
+                setState(() {
                   AdaptiveTheme.of(context).setDark();
-                  await MySharedPreferences.prefs.setString("themeMode", "dark");
-                }
-              });
+                });
+                await MySharedPreferences.prefs.setString("themeMode", "dark");
+              }
             },
             icon: Icon(AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark ? Icons.mode_night : Icons.mode_night_outlined),
           )
@@ -62,11 +64,11 @@ class _HomeState extends State<Home> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
+            DrawerHeader(
+              decoration: const BoxDecoration(
+                color: Colors.black,
               ),
-              child: Center(child: Text('Drawer Header')),
+              child: Image.asset("assets/images/favicon.ico"),
             ),
             buildItem(Icons.home, "Accueil",0),
             buildItem(Icons.show_chart, "Statistiques",1),
