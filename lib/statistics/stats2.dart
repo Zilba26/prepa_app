@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prepa_app/statistics/stats.dart';
 
-import '../models/ecole.dart';
-
 class Stats2 extends StatefulWidget {
   const Stats2({Key? key}) : super(key: key);
 
@@ -58,11 +56,22 @@ class _Stats2State extends State<Stats2> with TickerProviderStateMixin {
     return Column(
       children: [
         TabBar(
+          indicatorColor: const Color.fromRGBO(241, 79, 53, 1),
           controller: _concoursTabController,
           tabs: concoursTab
         ),
+        const SizedBox(height: 10),
         TabBar(
           isScrollable: true,
+          labelColor: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+          indicator: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [Color.fromRGBO(240, 45, 81, 1), Color.fromRGBO(242, 114, 26, 1)]
+            )
+          ),
           controller: _ecoleTabController,
           tabs: ecoleTab
         ),
