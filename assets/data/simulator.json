@@ -1,0 +1,30 @@
+[
+  {
+    "concours":"CCINP",
+    "filiere":"MP",
+    "epreuves":[
+      {"nom":"Mathématiques 1","coef":12},
+      {"nom":"Physique-Chimie","coef":7},
+      {"nom":"Mathématiques 2","coef":12},
+      {"nom":"Français-Philo","coef":9},
+      {"nom":"Physique","coef":7},
+      {"nom":"LV1","coef":4},
+      {"nom":"LV2","coef":2},
+      {"nom":"Info ou SI","coef":7}
+    ]
+  },
+  {
+    "concours":"CCINP",
+    "filiere":"PSI",
+    "epreuves":[
+      {"nom":"Mathématiques","coef":9},
+      {"nom":"Physique-Chimie","coef":9},
+      {"nom": "Modélisation et Ingénierie Numérique", "coef":9},
+      {"nom":"Français-Philo","coef":9},
+      {"nom":"Informatique","coef":6},
+      {"nom":"LV1","coef":4},
+      {"nom":"LV2","coef":2},
+      {"nom":"Sciences Industrielles de l'ingénieur","coef":12}
+    ]
+  }
+]
