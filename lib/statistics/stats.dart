@@ -66,10 +66,10 @@ class _StatsState extends State<Stats> {
     return nb.toString();
   }
 
-  Widget _buildHeadingCell({required String label, required int columnIndex}) {
+  Widget _buildHeadingCell({required String label, required int columnIndex, bool isSort = true}) {
     return InkWell(
       onTap: () {
-        sort(columnIndex, !_sortAscending);
+        if(isSort) sort(columnIndex, !_sortAscending);
       },
       child: Padding(
         padding: const EdgeInsets.all(8),
@@ -121,7 +121,7 @@ class _StatsState extends State<Stats> {
               ),
               if (MySharedPreferences.isConnected) Expanded(
                 flex: 67,
-                child: _buildHeadingCell(label: "FAVORIS", columnIndex: 5)
+                child: _buildHeadingCell(label: "FAVORIS", columnIndex: 5, isSort: false)
               )
             ],
           ),
@@ -135,11 +135,11 @@ class _StatsState extends State<Stats> {
             sortColumnIndex: _sortColumnIndex,
             sortAscending: _sortAscending,
             columns: [
-              DataColumn2(label: const Text("ECOLES", style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold)), numeric: false, size: ColumnSize.L, onSort: (columnIndex, ascending) => sort(columnIndex, ascending)),
-              DataColumn2(label: const Text("INSCRITS", style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold)), numeric: true, size: ColumnSize.S, onSort: (columnIndex, ascending) => sort(columnIndex, ascending)),
-              DataColumn2(label: const Text("ADMISSIBLES", style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, backgroundColor: Colors.red)), numeric: true, size: ColumnSize.S, onSort: (columnIndex, ascending) => sort(columnIndex, ascending)),
-              DataColumn2(label: const Text("INTEGRES", style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold)), numeric: true, size: ColumnSize.S, onSort: (columnIndex, ascending) => sort(columnIndex, ascending)),
-              DataColumn2(label: const Text("PLACES", style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold)), numeric: true, size: ColumnSize.S, onSort: (columnIndex, ascending) => sort(columnIndex, ascending)),
+              const DataColumn2(label: Text("ECOLES", style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold)), numeric: false, size: ColumnSize.L, ),
+              const DataColumn2(label: Text("INSCRITS", style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold)), numeric: true, size: ColumnSize.S, ),
+              const DataColumn2(label: Text("ADMISSIBLES", style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, backgroundColor: Colors.red)), numeric: true, size: ColumnSize.S, ),
+              const DataColumn2(label: Text("INTEGRES", style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold)), numeric: true, size: ColumnSize.S, ),
+              const DataColumn2(label: Text("PLACES", style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold)), numeric: true, size: ColumnSize.S, ),
               if (MySharedPreferences.isConnected) const DataColumn2(label: Text("FAVORIS", style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold)), numeric: false, size: ColumnSize.S)
             ],
             rows: ecoleList.map((EcoleStatsTest ecole) {

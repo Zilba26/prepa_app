@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prepa_app/style.dart';
+import 'package:prepa_app/utils/style.dart';
 
 import 'models/ecole.dart';
 

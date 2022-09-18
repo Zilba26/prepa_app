@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prepa_app/navigation_service.dart';
+import 'package:prepa_app/utils/navigation_service.dart';
 import 'package:prepa_app/utils/utils.dart';
 
 class StepperBar extends StatelessWidget {

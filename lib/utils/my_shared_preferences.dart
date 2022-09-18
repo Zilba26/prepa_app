@@ -27,15 +27,18 @@ class MySharedPreferences {
   static String? get username => _username;
   static AdaptiveThemeMode get themeMode => _themeMode;
 
-  static connexion(String username) async {
-    await prefs.setBool("isConnected", true);
-    await prefs.setString("username", username);
+  static connexion(String username, bool remember) async {
+    if (remember) {
+      await prefs.setBool("isConnected", true);
+      await prefs.setString("username", username);
+    }
     _isConnected = true;
     _username = username;
   }
 
   static deconnexion() async {
     await prefs.setBool("isConnected", false);
+    await prefs.remove('username');
     _isConnected = false;
     _username = null;
   }

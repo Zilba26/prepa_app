@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'navigation_service.dart';
+import 'utils/navigation_service.dart';
 import 'utils/my_shared_preferences.dart';
 import 'home.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';

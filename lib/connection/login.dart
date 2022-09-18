@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:prepa_app/database.dart';
+import 'package:prepa_app/utils/database.dart';
 import 'package:prepa_app/home.dart';
 import 'package:prepa_app/utils/my_shared_preferences.dart';
 import 'package:prepa_app/utils/screens_manager.dart';
+
+import '../utils/navigation_service.dart';
 
 //import 'package:email_validator/email_validator.dart';
 
@@ -21,6 +23,8 @@ class _LoginState extends State<Login> {
   bool passwordValidator = true;
 
   final _formKey = GlobalKey<FormState>();
+
+  bool remember = true;
 
   @override
   void dispose() {
@@ -76,9 +80,16 @@ class _LoginState extends State<Login> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
-                    children: const [
-                      Checkbox(value: false, onChanged: null),
-                      Text("Souvenez-vous de moi")
+                    children: [
+                      Checkbox(
+                        value: remember,
+                        onChanged: (value) {
+                          setState(() {
+                            remember = value!;
+                          });
+                        },
+                      ),
+                      const Text("Souvenez-vous de moi")
                     ],
                   ),
                   TextButton(
@@ -106,8 +117,9 @@ class _LoginState extends State<Login> {
                       }
                     }
                     if (_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Connection succeful")));
-                      await MySharedPreferences.connexion(username);
+                      ScaffoldMessenger.of(NavigationService.getContext()).showSnackBar(const SnackBar(content: Text("Connection succeful")));
+                      await MySharedPreferences.connexion(username, remember);
+                      Navigator.of(NavigationService.getContext()).pushReplacement(MaterialPageRoute(builder: (context) => const Home(index: 4,)));
                     }
                   }
                 )
@@ -131,7 +143,7 @@ class _LoginState extends State<Login> {
                     child: const Text("S'enregistrer"),
                     onPressed: () {
                       ScreensManager.toggleLoginScreen();
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Home(index: 4,)));
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const Home(index: 4,)));
                     }
                   )
                 ],

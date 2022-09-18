@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:prepa_app/database.dart';
+import 'package:prepa_app/utils/database.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:prepa_app/utils/navigation_service.dart';
 import 'package:prepa_app/utils/my_shared_preferences.dart';
 import 'package:prepa_app/utils/screens_manager.dart';
 
@@ -149,7 +150,8 @@ class _SignUpState extends State<SignUp> {
                       emailValidator = await DBConnection.isRegister(_emailController.text);
                       if (_formKey.currentState!.validate()) {
                         DBConnection.addUser(_usernameController.text, _emailController.text, _passwordController.text);
-                        await MySharedPreferences.connexion(_usernameController.text);
+                        await MySharedPreferences.connexion(_usernameController.text, true);
+                        Navigator.of(NavigationService.getContext()).pushReplacement(MaterialPageRoute(builder: (context) => const Home(index: 4,)));
                       }
                     }
                   )
@@ -173,7 +175,7 @@ class _SignUpState extends State<SignUp> {
                         child: const Text("Se connecter"),
                         onPressed: () {
                           ScreensManager.toggleLoginScreen();
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Home(index: 4,)));
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const Home(index: 4,)));
                         }
                     )
                   ],
