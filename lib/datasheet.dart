@@ -10,9 +10,9 @@ class Datasheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    Widget buildComponent(String name, double chiffre, bool isUp, bool pourcent) {
+    Widget buildComponent(String name, double? chiffre, bool isUp, bool pourcent) {
       dynamic chiffreString = chiffre;
-      if (!pourcent) {
+      if (!pourcent && chiffre != null) {
         chiffreString = chiffre.toInt();
       }
       return Padding(
@@ -46,9 +46,9 @@ class Datasheet extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                buildComponent("Places", ecole.place, true, false),
-                buildComponent("Rang médian", ecole.rangMedian, false, false),
-                buildComponent("Rang moyen", ecole.rangMoyen, true, false),
+                buildComponent("Places", ecole.places?.toDouble(), true, false),
+                buildComponent("Rang médian", ecole.rangMedian?.toDouble(), false, false),
+                buildComponent("Rang moyen", ecole.rangMoyen?.toDouble(), true, false),
               ],
             ),
           ),
@@ -56,8 +56,8 @@ class Datasheet extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              buildComponent("Cinq demis", ecole.pourcentage5_2, true, true),
-              buildComponent("Filles", ecole.pourcentageFilles, false, true),
+              buildComponent("Cinq demis", ecole.integres_5_2, true, true),
+              buildComponent("Filles", ecole.integresFilles, false, true),
             ],
           ),
           const Divider(),

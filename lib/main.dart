@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:prepa_app/utils/database.dart';
 import 'utils/navigation_service.dart';
 import 'utils/my_shared_preferences.dart';
 import 'home.dart';
@@ -9,6 +10,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load();
   await MySharedPreferences.init();
+  await DBConnection.init();
   runApp(const MyApp());
 }
 

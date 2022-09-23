@@ -48,12 +48,12 @@ class _HomeState extends State<Home> {
                 setState(() {
                   AdaptiveTheme.of(context).setLight();
                 });
-                await MySharedPreferences.prefs.setString("themeMode", "light");
+                await MySharedPreferences.setLight();
               } else {
                 setState(() {
                   AdaptiveTheme.of(context).setDark();
                 });
-                await MySharedPreferences.prefs.setString("themeMode", "dark");
+                await MySharedPreferences.setDark();
               }
             },
             icon: Icon(AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark ? Icons.mode_night : Icons.mode_night_outlined),

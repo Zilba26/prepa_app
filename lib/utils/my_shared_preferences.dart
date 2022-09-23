@@ -42,4 +42,14 @@ class MySharedPreferences {
     _isConnected = false;
     _username = null;
   }
+
+  static setLight() async {
+    await prefs.setString("themeMode", "light");
+    _themeMode = AdaptiveThemeMode.light;
+  }
+
+  static setDark() async {
+    await prefs.setString("themeMode", "dark");
+    _themeMode = AdaptiveThemeMode.dark;
+  }
 }
