@@ -1,8 +1,10 @@
+import 'package:mongo_dart/mongo_dart.dart';
 import 'package:prepa_app/models/concours.dart';
 import 'package:prepa_app/models/filiere.dart';
 import 'package:prepa_app/utils/utils.dart';
 
 class Ecole {
+  ObjectId id;
   Concours concours;
   String name;
 
@@ -33,6 +35,7 @@ class Ecole {
 
 
   Ecole.fromMap(Map<dynamic, dynamic> map) :
+    id = (map['_id'] is String) ? ObjectId.fromHexString(map['_id']) : map['_id'],
     concours = Utils.getConcoursForDatabase(map['concours']),
     name = map['ecole'],
     inscrits = map['inscrits_nb'],

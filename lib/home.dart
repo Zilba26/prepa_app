@@ -5,6 +5,7 @@ import 'package:prepa_app/connection/connection.dart';
 import 'package:prepa_app/statistics/stats2.dart';
 import 'package:prepa_app/leaderboard/leaderboard.dart';
 import 'package:prepa_app/simulator/simulator.dart';
+import 'package:prepa_app/utils/database.dart';
 import 'package:prepa_app/utils/my_shared_preferences.dart';
 
 class Home extends StatefulWidget {
@@ -79,6 +80,14 @@ class _HomeState extends State<Home> {
         ),
       ),
       body: widgets[_currentIndex],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await DBConnection.initSchools();
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Mise à jour des données terminée")));
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

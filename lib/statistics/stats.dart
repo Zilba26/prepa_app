@@ -138,7 +138,7 @@ class _StatsState extends State<Stats> {
                   builder: (BuildContext context) => Datasheet(ecole: ecole),
                 ),
                 cells: [
-                  DataCell(Text(ecole.name, style: const TextStyle(fontSize: 12))),
+                  DataCell(Text(ecole.name, maxLines: 3, style: const TextStyle(fontSize: 12, overflow: TextOverflow.ellipsis))),
                   DataCell(Center(child: Text(convertNbToString(ecole.inscrits)))),
                   DataCell(Center(child: Text(convertNbToString(ecole.admissibles)))),
                   DataCell(Center(child: Text(convertNbToString(ecole.integres)))),

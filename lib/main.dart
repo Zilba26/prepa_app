@@ -10,7 +10,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load();
   await MySharedPreferences.init();
-  await DBConnection.init();
+  await DBConnection.initSchools();
   runApp(const MyApp());
 }
 

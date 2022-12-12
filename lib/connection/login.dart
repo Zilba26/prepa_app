@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:prepa_app/models/profile.dart';
 import 'package:prepa_app/utils/database.dart';
 import 'package:prepa_app/home.dart';
 import 'package:prepa_app/utils/my_shared_preferences.dart';
-import 'package:prepa_app/utils/screens_manager.dart';
 
 import '../utils/navigation_service.dart';
 
 //import 'package:email_validator/email_validator.dart';
 
 class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+  const Login({Key? key, required this.controller}) : super(key: key);
+
+  final PageController controller;
 
   @override
   State<Login> createState() => _LoginState();
@@ -25,6 +27,8 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
 
   bool remember = true;
+
+  bool fetchLoading = false;
 
   @override
   void dispose() {
@@ -102,15 +106,18 @@ class _LoginState extends State<Login> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  child: const Text("Connexion"),
                   onPressed: () async {
-                    String username = await DBConnection.validator(_emailController.text, _passwordController.text);
-                    if (username == "Email non enregistréeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") {
+                    if (fetchLoading) return;
+                    setState(() {
+                      fetchLoading = true;
+                    });
+                    Map response = await DBConnection.login(_emailController.text, _passwordController.text, remember);
+                    if (response["message"] == "Error fetching user." || _emailController.text.isEmpty) {
                       emailValidator = false;
                       passwordValidator = true;
                     } else {
                       emailValidator = true;
-                      if (username == "Mot de passe incorrecteeeeeeeeeeeeeeeeeeeeeeeeeeee") {
+                      if (response["message"] == "Password is incorrect." || _passwordController.text.isEmpty) {
                         passwordValidator = false;
                       } else {
                         passwordValidator = true;
@@ -118,10 +125,15 @@ class _LoginState extends State<Login> {
                     }
                     if (_formKey.currentState!.validate()) {
                       ScaffoldMessenger.of(NavigationService.getContext()).showSnackBar(const SnackBar(content: Text("Connection succeful")));
-                      await MySharedPreferences.connexion(username, remember);
+                      Profile profile = Profile(id: response["user"]["_id"], username: response["user"]["name"], email: response["user"]["email"]);
+                      await MySharedPreferences.connexion(profile, remember);
                       Navigator.of(NavigationService.getContext()).pushReplacement(MaterialPageRoute(builder: (context) => const Home(index: 4,)));
                     }
-                  }
+                    setState(() {
+                      fetchLoading = false;
+                    });
+                  },
+                  child: fetchLoading ? const SizedBox(height: 25, width: 25, child: CircularProgressIndicator(color: Colors.white)) : const Text("Connexion")
                 )
               ),
               Container(
@@ -142,8 +154,7 @@ class _LoginState extends State<Login> {
                   TextButton(
                     child: const Text("S'enregistrer"),
                     onPressed: () {
-                      ScreensManager.toggleLoginScreen();
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const Home(index: 4,)));
+                      widget.controller.jumpToPage(1);
                     }
                   )
                 ],
